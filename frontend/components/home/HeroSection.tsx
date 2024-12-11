@@ -18,7 +18,6 @@ export default function HeroSection() {
         numSquares={200}
         maxOpacity={0.5}
         duration={1}
-        repeatDelay={0.5}
       />
 
       {/* Background gradient */}
