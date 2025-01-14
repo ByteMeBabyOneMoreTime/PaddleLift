@@ -25,6 +25,8 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     "cron",
     "jobs",
+    'cloud',
+    'home_page_content',
     'tinymce',
     #  TIny MCE
     "corsheaders",
@@ -240,3 +242,15 @@ TINYMCE_DEFAULT_CONFIG = {
     "promotion": False,
     "branding": False,
 }
+
+
+# Google Drive Config
+SCOPES = ['https://www.googleapis.com/auth/drive']
+GCP_PROJECT_ID = os.getenv("GCP_PROJECT_ID")
+GCP_CLIENT_EMAIL = os.getenv("GCP_CLIENT_EMAIL")
+GCP_PRIVATE_KEY_ID = os.getenv("GCP_PRIVATE_KEY_ID")
+GCP_CLIENT_ID = os.getenv("GCP_CLIENT_ID")
+GCP_CLIENT_X509_CERT_URL = os.getenv("GCP_CLIENT_X509_CERT_URL")
+
+CV_FOLDER=os.getenv('CV_FOLDER')
+HOME_PAGE_CONTENT_FOLDER = os.getenv('HOME_PAGE_CONTENT_FOLDER')
