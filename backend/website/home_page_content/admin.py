@@ -85,4 +85,6 @@ class ClientsLogosAdmin(admin.ModelAdmin):
 
 admin.site.register(service)
 admin.site.register(GlobalExpansion)
+admin.site.register(stats)
 admin.site.register(ClientsLogos, ClientsLogosAdmin)
+# admin.site.register(ClientsResponses)

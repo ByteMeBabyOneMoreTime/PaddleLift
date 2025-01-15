@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 # Load .env
-load_dotenv()
+# load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,6 +24,9 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     "cron",
+    # cron job
+    'jet',
+    # django jet
     "jobs",
     'cloud',
     'home_page_content',
@@ -31,8 +34,6 @@ INSTALLED_APPS = [
     #  TIny MCE
     "corsheaders",
     # cors headers handler
-    'jazzmin', 
-    # jazzmin
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -158,67 +159,41 @@ WHITENOISE_USE_FINDERS = True
 WHITENOISE_MANIFEST_STRICT = False
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# django jazzmin config
-JAZZMIN_SETTINGS = {
-    # title of the window (Will default to current_admin_site.site_title if absent or None)
-    "site_title": "Emerging India Foundation",
+JET_DEFAULT_THEME = 'light-gray'
+JET_THEMES = [
+    {
+        'theme': 'default', # theme folder name
+        'color': '#47bac1', # color of the theme's button in user menu
+        'title': 'Default' # theme title
+    },
+    {
+        'theme': 'green',
+        'color': '#44b78b',
+        'title': 'Green'
+    },
+    {
+        'theme': 'light-green',
+        'color': '#2faa60',
+        'title': 'Light Green'
+    },
+    {
+        'theme': 'light-violet',
+        'color': '#a464c4',
+        'title': 'Light Violet'
+    },
+    {
+        'theme': 'light-blue',
+        'color': '#5EADDE',
+        'title': 'Light Blue'
+    },
+    {
+        'theme': 'light-gray',
+        'color': '#222',
+        'title': 'Light Gray'
+    }
+]
+JET_CHANGE_FORM_SIBLING_LINKS = True
 
-    # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_header": "Admin Panel",
-
-    # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_brand": "Emerging India",
-
-    # Logo to use for your site, must be present in static files, used for brand on top left
-    "site_logo": 'logo.png',
-
-    # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
-    "login_logo": 'logo_sm.png',
-
-    # Logo to use for login form in dark themes (defaults to login_logo)
-    "login_logo_dark": None,
-
-    # CSS classes that are applied to the logo above
-    "site_logo_classes": "img-circle",
-
-    # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
-    "site_icon": None,
-
-    # Welcome text on the login screen
-    "welcome_sign": "welcome to the admin panel",
-
-    # Copyright on the footer
-    "copyright": "Emerging India Foundation",
-  
-    "show_ui_builder": True,
-  
-    #############
-    # Side Menu #
-    #############
-
-    # Whether to aut expand the menu
-    "navigation_expanded": True,
-
-    # Hide these apps when generating side menu e.g (auth)
-    "hide_apps": [],
-
-    # Hide these models when generating side menu (e.g auth.user)
-    "hide_models": [],
-    "topmenu_links": [
-        {"name": "Home",  "url": "/", "permissions": ["auth.view_user"]},
-        {"name": "Gallery Image Upload",  "url": "/gallery/upload", "permissions": ["auth.view_user",  "is_superuser"]},
-        {"name": "Gallery News Upload",  "url": "/gallery/upload_news", "permissions": ["auth.view_user",  "is_superuser"]},
-        {"name": "Download Data in Excel",  "url": "/forms/download", "permissions": ["auth.view_user",  "is_superuser"]},
-        ],
-
-}
-
-# jazzmin UI config
-JAZZMIN_UI_TWEAKS = {
-    
-    "theme": "superhero",
-    
-}
 
 # TIny MCE config
 TINYMCE_DEFAULT_CONFIG = {
