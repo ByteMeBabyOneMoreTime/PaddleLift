@@ -13,22 +13,22 @@ def get_service_data(request: object) -> JsonResponse:
                 "service1": {
                     "id" : "1",
                     "heading": service_instance.service1_heading,
-                    "image_url": service_instance.service1_image_url,
+                    "vedio_url": service_instance.service1_vedio_url,
                 },
                 "service2": {
                     "id" : "2",
                     "heading": service_instance.service2_heading,
-                    "image_url": service_instance.service2_image_url,
+                    "vedio_url": service_instance.service2_vedio_url,
                 },
                 "service3": {
                     "id" : "3",
                     "heading": service_instance.service3_heading,
-                    "image_url": service_instance.service3_image_url,
+                    "vedio_url": service_instance.service3_vedio_url,
                 },
                 "service4": {
                     "id" : "4",
                     "heading": service_instance.service4_heading,
-                    "image_url": service_instance.service4_image_url,
+                    "vedio_url": service_instance.service4_vedio_url,
                 },
             }
             return JsonResponse(data, status=200)
