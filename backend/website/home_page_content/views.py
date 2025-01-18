@@ -87,12 +87,41 @@ def stats_view(request):
         data = {
             "id": stats_instance.id,
             "description": stats_instance.description,
-            "ClientsServed": stats_instance.ClientsServed,
-            "CandidatesPlaced": stats_instance.CandidatesPlaced,
-            "ClientRetentionRate": stats_instance.ClientRetentionRate,
-            "TurnAroundTime": stats_instance.TurnAroundTime,
-            "JoiningRatio": stats_instance.JoiningRatio,
-            "CandidateSatisfactionRate": stats_instance.CandidateSatisfactionRate,
+            "data":   [{
+                    "title": "Clients Served",
+                    "value": stats_instance.ClientsServed,
+                    "suffix": "+",
+                },
+                {
+                    "title": "Candidates Placed",
+                    "value": stats_instance.CandidatesPlaced,
+                    "suffix": "+",
+                },
+                {
+                    "title": "Client Retention Rate (CRR)",
+                    "prefix": ">",
+                    "value": stats_instance.ClientRetentionRate,
+                    "suffix": "%",
+                },
+                {
+                    "title": "Turn Around Time (TAT)",
+                    "prefix": "<",
+                    "value": stats_instance.TurnAroundTime,
+                    "suffix": "Hrs",
+                },
+                {
+                    "title": "Joining Ratio",
+                    "prefix": ">",
+                    "value": stats_instance.JoiningRatio,
+                    "suffix": "%",
+                },
+                {
+                    "title": "Candidate Satisfaction Rate (CSR)",
+                    "prefix": ">",
+                    "value": stats_instance.CandidateSatisfactionRate,
+                    "suffix": "%",
+                }
+            ],
         }
         return JsonResponse(data, status=200)
 
