@@ -22,7 +22,8 @@ class GlobalExpansion(SingletonModel):
         verbose_name = "2 - Operations Around the World"
     
     description = models.CharField(max_length=4000)
-
+    def __str__(self):
+        return "Click to edit the Section"
 
 class stats(SingletonModel):
     class Meta:
@@ -34,7 +35,10 @@ class stats(SingletonModel):
     TurnAroundTime = models.IntegerField()
     JoiningRatio = models.IntegerField()
     CandidateSatisfactionRate = models.IntegerField()
-
+    def __str__(self):
+        return "Click to edit the Section"
+    
+    
 class ClientsLogos(models.Model):
     class Meta:
         verbose_name = "4 - Our Client"

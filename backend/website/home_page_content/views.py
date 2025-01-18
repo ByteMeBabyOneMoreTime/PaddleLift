@@ -1,7 +1,6 @@
 from django.http import JsonResponse
-from .models import service
+from .models import *
 from django.views.decorators.http import require_http_methods
-from .models import GlobalExpansion
 
 def get_service_data(request: object) -> JsonResponse:
     """
@@ -65,5 +64,41 @@ def global_expansion_view(request):
         # Handle unexpected errors
         return JsonResponse(
             {"error": "An error occurred while retrieving the data.", "details": str(e)},
+            status=500
+        )
+    
+
+@require_http_methods(["GET"])
+def stats_view(request):
+    """
+    Handle GET requests to retrieve stats data.
+    """
+    try:
+        # Get the first instance of stats (Singleton pattern)
+        stats_instance = stats.objects.first()
+        
+        if not stats_instance:
+            return JsonResponse(
+                {"error": "Stats data not found."},
+                status=404
+            )
+
+        # Return the stats data as JSON
+        data = {
+            "id": stats_instance.id,
+            "description": stats_instance.description,
+            "ClientsServed": stats_instance.ClientsServed,
+            "CandidatesPlaced": stats_instance.CandidatesPlaced,
+            "ClientRetentionRate": stats_instance.ClientRetentionRate,
+            "TurnAroundTime": stats_instance.TurnAroundTime,
+            "JoiningRatio": stats_instance.JoiningRatio,
+            "CandidateSatisfactionRate": stats_instance.CandidateSatisfactionRate,
+        }
+        return JsonResponse(data, status=200)
+
+    except Exception as e:
+        # Handle unexpected errors
+        return JsonResponse(
+            {"error": "An error occurred while retrieving the stats.", "details": str(e)},
             status=500
         )
