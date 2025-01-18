@@ -6,13 +6,13 @@ class service(SingletonModel):
     class Meta:
         verbose_name = "1 - Range of Service"
     service1_heading = models.CharField(max_length=2500, default='')
-    service1_vedio_url = models.URLField(max_length=255, default='')
+    service1_video_url = models.URLField(max_length=255, default='')
     service2_heading = models.CharField(max_length=2500, default='')
-    service2_vedio_url = models.URLField(max_length=255, default='')
+    service2_video_url = models.URLField(max_length=255, default='')
     service3_heading = models.CharField(max_length=2500, default='')
-    service3_vedio_url = models.URLField(max_length=255, default='')
+    service3_video_url = models.URLField(max_length=255, default='')
     service4_heading = models.CharField(max_length=2500, default='')
-    service4_vedio_url = models.URLField(max_length=255, default='')
+    service4_video_url = models.URLField(max_length=255, default='')
     
     def __str__(self):
         return "Click to edit the Section"
