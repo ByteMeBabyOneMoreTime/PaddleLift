@@ -13,6 +13,9 @@ class service(SingletonModel):
     service3_image_url = models.URLField(max_length=255, default='')
     service4_heading = models.CharField(max_length=2500, default='')
     service4_image_url = models.URLField(max_length=255, default='')
+    
+    def __str__(self):
+        return "Click to edit the Section"
 
 class OperationsAroundtheWorld(SingletonModel):
     class Meta:

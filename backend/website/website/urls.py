@@ -5,5 +5,6 @@ urlpatterns = [
     path('jet/', include('jet.urls', 'jet')),
     path('admin/', admin.site.urls, name="admin"),
     path('cron', include('cron.urls')),
-    path('', home)
+    path('', home),
+    path('components/', include('home_page_content.urls'))
 ]
