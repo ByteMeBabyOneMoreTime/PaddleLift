@@ -131,3 +131,42 @@ def stats_view(request):
             {"error": "An error occurred while retrieving the stats.", "details": str(e)},
             status=500
         )
+    
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+from .models import ClientsLogos
+
+
+@require_http_methods(["GET"])
+def clients_logos_view(request):
+    """
+    Handle GET requests to retrieve all Client Logos details.
+    """
+    try:
+        # Retrieve all client logos from the database
+        clients_logos = ClientsLogos.objects.all()
+
+        if not clients_logos.exists():
+            return JsonResponse(
+                {"error": "No client logos found."},
+                status=404
+            )
+
+        # Serialize the data into a list of dictionaries
+        data = [
+            {   "id" : client_logo.id,
+                "src": client_logo.logo_url,
+                "name": client_logo.name,
+                
+            }
+            for client_logo in clients_logos
+        ]
+
+        return JsonResponse({"clients_logos": data}, status=200)
+
+    except Exception as e:
+        # Handle unexpected errors
+        return JsonResponse(
+            {"error": "An error occurred while retrieving the data.", "details": str(e)},
+            status=500
+        )
