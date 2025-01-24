@@ -47,10 +47,31 @@ class ClientsLogos(models.Model):
     logo_url = models.URLField(max_length=255, default='')
 
 
-class ClientsResponses(models.Model):
+class ClientsResponse(models.Model):
     class Meta:
-        verbose_name = "4 - Our Clients"
+        verbose_name = "5 - What Our Clients Say"
     image_url = models.URLField(max_length=255, default='')
+    name = models.CharField(max_length=200)
+    position = models.CharField(max_length=200)
+    response = models.TextField()
 
-
+class about(SingletonModel):
+    class Meta:
+        verbose_name = "6 - About PaddleLift"
     
+    description = models.CharField(max_length=4000)
+    
+    def __str__(self):
+        return "Click to edit the Section"
+
+class MissionAndVision(SingletonModel):
+    class Meta:
+        verbose_name = "7 - Our Vision, Mission & Core Values"
+    
+    vission_image_url = models.URLField(max_length=255, default="")
+    vission_description = models.TextField()
+    mission_image_url = models.URLField(max_length=255, default="")
+    mission_description = models.TextField()
+    
+    def __str__(self):
+        return "Click to edit the Section"

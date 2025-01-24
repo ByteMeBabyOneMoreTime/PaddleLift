@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from .models import *
+from .models import ClientsLogos, GlobalExpansion, service, stats
 from django.views.decorators.http import require_http_methods
 
 def get_service_data(request: object) -> JsonResponse:
@@ -132,9 +132,6 @@ def stats_view(request):
             status=500
         )
     
-from django.http import JsonResponse
-from django.views.decorators.http import require_http_methods
-from .models import ClientsLogos
 
 
 @require_http_methods(["GET"])
@@ -170,3 +167,5 @@ def clients_logos_view(request):
             {"error": "An error occurred while retrieving the data.", "details": str(e)},
             status=500
         )
+
+
