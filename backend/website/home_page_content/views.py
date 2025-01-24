@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from .models import ClientsLogos, GlobalExpansion, service, stats
+from .models import ClientsLogos, GlobalExpansion, MissionAndVision, about, service, stats
 from django.views.decorators.http import require_http_methods
 
 def get_service_data(request: object) -> JsonResponse:
@@ -169,3 +169,46 @@ def clients_logos_view(request):
         )
 
 
+@require_http_methods(["GET"])
+def about_json_view(request):
+    try:
+        about_instance = about.objects.first()
+        if about_instance:
+            data = {
+                "description": about_instance.description,
+            }
+        else:
+            data = {
+                "error": "No 'About PaddleLift' instance found."
+            }
+    except Exception as e:
+        data = {
+            "error": str(e)
+        }
+    return JsonResponse(data)
+
+
+@require_http_methods(["GET"])
+def mission_and_vision_json_view(request):
+    try:
+        mission_and_vision_instance = MissionAndVision.objects.first()  # Fetching the singleton instance
+        if mission_and_vision_instance:
+            data = {
+                "vision": {
+                    "image_url": mission_and_vision_instance.vission_image_url,
+                    "description": mission_and_vision_instance.vission_description,
+                },
+                "mission": {
+                    "image_url": mission_and_vision_instance.mission_image_url,
+                    "description": mission_and_vision_instance.mission_description,
+                }
+            }
+        else:
+            data = {
+                "error": "No 'Mission and Vision' instance found."
+            }
+    except Exception as e:
+        data = {
+            "error": str(e)
+        }
+    return JsonResponse(data)
