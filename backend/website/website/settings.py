@@ -233,19 +233,19 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 UNFOLD = {
-    "SITE_HEADER": _("Formula Admin"),
-    "SITE_TITLE": _("Formula Admin"),
+    "SITE_HEADER": _("PaddleLift Admin"),
+    "SITE_TITLE": _("PaddleLift Admin"),
     "SITE_SYMBOL": "settings",
     "SITE_URL": "/",
     # "SITE_ICON": lambda request: static("icon.svg"),  # both modes, optimise for 32px height
     "SITE_ICON": {
-        "light": lambda request: static("icon-light.svg"),  # light mode
-        "dark": lambda request: static("icon-dark.svg"),  # dark mode
+        "light": lambda request: static("Plogo.svg"),  # light mode
+        "dark": lambda request: static("Plogo.svg"),  # dark mode
     },
     # "SITE_LOGO": lambda request: static("logo.svg"),  # both modes, optimise for 32px height
     "SITE_LOGO": {
-        "light": lambda request: static("logo-light.svg"),  # light mode
-        "dark": lambda request: static("logo-dark.svg"),  # dark mode
+        "light": lambda request: static("Paddlelite Logo.png"),  # light mode
+        "dark": lambda request: static("Paddlelite Logo.png"),  # dark mode
     },
     "SCRIPTS": [
         lambda request: static("loader.js"),
