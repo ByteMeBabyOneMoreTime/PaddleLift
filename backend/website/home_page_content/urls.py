@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import about_json_view, clients_logos_view, get_service_data, global_expansion_view, mission_and_vision_json_view, stats_view
+from .views import about_json_view, clients_logos_view, get_service_data, global_expansion_view, management_team_json_view, mission_and_vision_json_view, stats_view
 
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     path('clients/', view=clients_logos_view, name='clients'),
     path('about/', about_json_view, name='about'),
     path('mission-and-vision/', mission_and_vision_json_view, name='mission_and_vision'),
+    path('management/', management_team_json_view, name='management'),
 ]

@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from .models import ClientsLogos, GlobalExpansion, MissionAndVision, about, service, stats
+from .models import ClientsLogos, GlobalExpansion, ManagementTeam, MissionAndVision, about, service, stats
 from django.views.decorators.http import require_http_methods
 
 def get_service_data(request: object) -> JsonResponse:
@@ -213,3 +213,33 @@ def mission_and_vision_json_view(request):
         }
     return JsonResponse(data)
 
+@require_http_methods(["GET"])
+def management_team_json_view(request):
+    try:
+        management_team_members = ManagementTeam.objects.all()  # Fetch all team members
+        if management_team_members.exists():
+            data = {
+                "management_team": [
+                    {
+                        "name": member.name,
+                        "title": member.position,
+                        "position": member.role,
+                        "photo": member.image_url,
+                        "description": member.about_text,
+                        "socials" : {
+                        "linkedin": member.linked_in_url,
+                        },
+                        
+                    }
+                    for member in management_team_members
+                ]
+            }
+        else:
+            data = {
+                "error": "No management team members found."
+            }
+    except Exception as e:
+        data = {
+            "error": str(e)
+        }
+    return JsonResponse(data)
