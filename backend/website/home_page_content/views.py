@@ -212,3 +212,4 @@ def mission_and_vision_json_view(request):
             "error": str(e)
         }
     return JsonResponse(data)
+

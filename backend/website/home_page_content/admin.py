@@ -151,7 +151,7 @@ class ManagementTeamAdminForm(forms.ModelForm):
         exclude = ['image_url']
 
 @admin.register(ManagementTeam)
-class ManagementTeamAdmin(admin.ModelAdmin):
+class ManagementTeamAdmin(ModelAdmin):
     form = ManagementTeamAdminForm
     list_display = ('name','position','role','linked_in_url', 'about_text', 'image_url')
     readonly_fields = ('image_url',)
