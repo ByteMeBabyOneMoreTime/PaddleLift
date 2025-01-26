@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django import forms
 
-from .models import ManagementTeam, MissionAndVision, about, stats, ClientsLogos, GlobalExpansion, service, ClientsResponse
+from .models import ContactInformation, FewSuccessStories, IndustriesWeServeCards, IndustriesWeServeDescription, ManagementTeam, MissionAndVision, OrganizationalStructureCards, OurPortfolioDescription, OurServicesDescription, PersonalImages, WhatSetsUsApartCards, about, stats, ClientsLogos, GlobalExpansion, service, ClientsResponse
 from website.settings import HOME_PAGE_CONTENT_FOLDER
 from cloud.utils import file_url
 import imghdr
@@ -169,6 +169,60 @@ class ManagementTeamAdmin(ModelAdmin):
             obj.image_url = url  
         super().save_model(request, obj, form, change)
 
+class PersonalImagesAdminForm(forms.ModelForm):
+    image = forms.ImageField(validators=[validate_image], required=False,  widget=ImageUploaderWidget())
+
+    class Meta:
+        model = PersonalImages
+        fields = ['image']
+        exclude = ['image_url']
+
+@admin.register(PersonalImages)
+class PersonalImagesAdmin(ModelAdmin):
+    form = PersonalImagesAdminForm
+    list_display = ('image_url',)
+    readonly_fields = ('image_url',)
+
+    def has_change_permission(self, request, obj=None):
+        if obj is None and PersonalImages.objects.exists():
+            return False
+        return super().has_change_permission(request, obj)
+    
+    
+    def save_model(self, request, obj, form, change):
+        if 'image' in form.cleaned_data and form.cleaned_data['image']:
+            file = form.cleaned_data['image']
+            url = file_url(file, folder_id=HOME_PAGE_CONTENT_FOLDER, file_type=1)
+            obj.image_url = url  
+        super().save_model(request, obj, form, change)
+
+class FewSuccessStoriesAdminForm(forms.ModelForm):
+    image = forms.ImageField(validators=[validate_image], required=False,  widget=ImageUploaderWidget())
+
+    class Meta:
+        model = FewSuccessStories
+        fields = ['heading', 'response','image' ]
+        exclude = ['image_url']
+
+@admin.register(FewSuccessStories)
+class FewSuccessStoriesAdmin(ModelAdmin):
+    form = FewSuccessStoriesAdminForm
+    list_display = ('heading', 'image_url', 'response')
+    readonly_fields = ('image_url',)
+
+    def has_change_permission(self, request, obj=None):
+        if obj is None and FewSuccessStories.objects.exists():
+            return False
+        return super().has_change_permission(request, obj)
+    
+    
+    def save_model(self, request, obj, form, change):
+        if 'image' in form.cleaned_data and form.cleaned_data['image']:
+            file = form.cleaned_data['image']
+            url = file_url(file, folder_id=HOME_PAGE_CONTENT_FOLDER, file_type=1)
+            obj.image_url = url  
+        super().save_model(request, obj, form, change)
+
 
 @admin.register(service)
 class Serivice(ModelAdmin):
@@ -186,3 +240,30 @@ class stats(ModelAdmin):
 class about(ModelAdmin):
     pass
 
+@admin.register(OurServicesDescription)
+class about(ModelAdmin):
+    pass
+
+@admin.register(IndustriesWeServeDescription)
+class about(ModelAdmin):
+    pass
+
+@admin.register(IndustriesWeServeCards)
+class about(ModelAdmin):
+    pass
+
+@admin.register(WhatSetsUsApartCards)
+class about(ModelAdmin):
+    pass
+
+@admin.register(OrganizationalStructureCards)
+class about(ModelAdmin):
+    pass
+
+@admin.register(OurPortfolioDescription)
+class about(ModelAdmin):
+    pass
+
+@admin.register(ContactInformation)
+class about(ModelAdmin):
+    pass

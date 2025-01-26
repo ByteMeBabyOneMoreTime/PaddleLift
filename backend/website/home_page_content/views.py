@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from .models import ClientsLogos, GlobalExpansion, ManagementTeam, MissionAndVision, about, service, stats
+from .models import ClientsLogos, ContactInformation, FewSuccessStories, GlobalExpansion, IndustriesWeServeCards, IndustriesWeServeDescription, ManagementTeam, MissionAndVision, OrganizationalStructureCards, OurPortfolioDescription, OurServicesDescription, PersonalImages, WhatSetsUsApartCards, about, service, stats
 from django.views.decorators.http import require_http_methods
 
 def get_service_data(request: object) -> JsonResponse:
@@ -133,7 +133,6 @@ def stats_view(request):
         )
     
 
-
 @require_http_methods(["GET"])
 def clients_logos_view(request):
     """
@@ -213,6 +212,7 @@ def mission_and_vision_json_view(request):
         }
     return JsonResponse(data)
 
+
 @require_http_methods(["GET"])
 def management_team_json_view(request):
     try:
@@ -242,4 +242,152 @@ def management_team_json_view(request):
         data = {
             "error": str(e)
         }
+    return JsonResponse(data)
+
+@require_http_methods(["GET"])
+def personal_images_json_view(request):
+    try:
+        images = PersonalImages.objects.all()
+        if images.exists():
+            data = {
+                "personal_images": [{"image_url": image.image_url} for image in images]
+            }
+        else:
+            data = {"error": "No images found for Life at PaddleLift."}
+    except Exception as e:
+        data = {"error": str(e)}
+    return JsonResponse(data)
+
+@require_http_methods(["GET"])
+def our_services_description_json_view(request):
+    try:
+        services = OurServicesDescription.objects.all()
+        if services.exists():
+            data = {
+                "our_services_descriptions": [
+                    {"description": service.description} for service in services
+                ]
+            }
+        else:
+            data = {"error": "No services descriptions found."}
+    except Exception as e:
+        data = {"error": str(e)}
+    return JsonResponse(data)
+
+@require_http_methods(["GET"])
+def industries_we_serve_description_json_view(request):
+    try:
+        description = IndustriesWeServeDescription.objects.first()
+        if description:
+            data = {"description": description.description}
+        else:
+            data = {"error": "No description found for Industries We Serve."}
+    except Exception as e:
+        data = {"error": str(e)}
+    return JsonResponse(data)
+
+@require_http_methods(["GET"])
+def industries_we_serve_cards_json_view(request):
+    try:
+        cards = IndustriesWeServeCards.objects.all()
+        if cards.exists():
+            data = {
+                "industries_we_serve_cards": [
+                    {"name_of_industry": card.name_of_industry} for card in cards
+                ]
+            }
+        else:
+            data = {"error": "No cards found for Industries We Serve."}
+    except Exception as e:
+        data = {"error": str(e)}
+    return JsonResponse(data)
+
+@require_http_methods(["GET"])
+def what_sets_us_apart_cards_json_view(request):
+    try:
+        cards = WhatSetsUsApartCards.objects.first()
+        if cards:
+            data = {
+                "what_sets_us_apart_cards": {
+                    "card1": {"heading": cards.card1_heading, "description": cards.card1_description},
+                    "card2": {"heading": cards.card2_heading, "description": cards.card2_description},
+                    "card3": {"heading": cards.card3_heading, "description": cards.card3_description},
+                    "card4": {"heading": cards.card4_heading, "description": cards.card4_description},
+                }
+            }
+        else:
+            data = {"error": "No cards found for What Sets Us Apart."}
+    except Exception as e:
+        data = {"error": str(e)}
+    return JsonResponse(data)
+
+@require_http_methods(["GET"])
+def organizational_structure_cards_json_view(request):
+    try:
+        cards = OrganizationalStructureCards.objects.first()
+        if cards:
+            data = {
+                "organizational_structure_cards": {
+                    "card1": {"heading": cards.card1_heading, "description": cards.card1_description},
+                    "card2": {"heading": cards.card2_heading, "description": cards.card2_description},
+                    "card3": {"heading": cards.card3_heading, "description": cards.card3_description},
+                    "card4": {"heading": cards.card4_heading, "description": cards.card4_description},
+                }
+            }
+        else:
+            data = {"error": "No cards found for Organizational Structure."}
+    except Exception as e:
+        data = {"error": str(e)}
+    return JsonResponse(data)
+
+@require_http_methods(["GET"])
+def our_portfolio_description_json_view(request):
+    try:
+        description = OurPortfolioDescription.objects.first()
+        if description:
+            data = {"description": description.description}
+        else:
+            data = {"error": "No portfolio description found."}
+    except Exception as e:
+        data = {"error": str(e)}
+    return JsonResponse(data)
+
+@require_http_methods(["GET"])
+def few_success_stories_json_view(request):
+    try:
+        stories = FewSuccessStories.objects.all()
+        if stories.exists():
+            data = {
+                "few_success_stories": [
+                    {
+                        "image_url": story.image_url,
+                        "heading": story.heading,
+                        "response": story.response,
+                    }
+                    for story in stories
+                ]
+            }
+        else:
+            data = {"error": "No success stories found."}
+    except Exception as e:
+        data = {"error": str(e)}
+    return JsonResponse(data)
+
+@require_http_methods(["GET"])
+def contact_information_json_view(request):
+    try:
+        contact = ContactInformation.objects.first()
+        if contact:
+            data = {
+                "contact_information": {
+                    "call": contact.call,
+                    "WhatsApp": contact.WhatsApp,
+                    "Email": contact.Email,
+                    "Address": contact.Address,
+                }
+            }
+        else:
+            data = {"error": "No contact information found."}
+    except Exception as e:
+        data = {"error": str(e)}
     return JsonResponse(data)
