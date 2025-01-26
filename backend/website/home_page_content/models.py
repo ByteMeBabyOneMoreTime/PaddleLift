@@ -75,3 +75,15 @@ class MissionAndVision(SingletonModel):
     
     def __str__(self):
         return "Click to edit the Section"
+
+class ManagementTeam(models.Model):
+    class Meta: 
+        verbose_name = "8 - Meet the Management"
+
+    name = models.CharField(max_length=400)
+    position = models.CharField(max_length=400)
+    role = models.CharField(max_length=400)
+    linked_in_url = models.URLField(max_length=255)
+    about_text = models.TextField()
+    image_url = models.URLField(max_length=255)
+

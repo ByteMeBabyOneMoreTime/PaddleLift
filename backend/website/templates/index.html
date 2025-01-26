@@ -8,6 +8,7 @@
             --primary-color: #00ffff;
             --secondary-color: #ff00ff;
             --background-dark: #0a0a1a;
+            --button-color: #4dd4ac;
         }
 
         * {
@@ -99,135 +100,85 @@
             }
         }
 
-        .portal-button {
+        .btn {
+            --color: var(--button-color);
             position: relative;
-            width: 200px;
-            height: 80px;
-            background: transparent;
-            border: 3px solid var(--primary-color);
-            border-radius: 10px;
-            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.5s;
+            border: none;
+            background-color: transparent;
             z-index: 10;
-            overflow: hidden;
-            transition: all 0.3s ease;
         }
 
-        .portal-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                120deg, 
-                transparent, 
-                rgba(0, 255, 255, 0.2), 
-                transparent
-            );
-            transition: 0.5s;
-        }
-
-        .portal-button:hover::before {
-            left: 100%;
-        }
-
-        .portal-button span {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: var(--primary-color);
-            font-size: 18px;
-            font-weight: bold;
-            text-transform: uppercase;
+        .btn div {
             letter-spacing: 2px;
-            transition: color 0.3s ease;
+            font-weight: bold;
+            background: var(--color);
+            border-radius: 2rem;
+            color: black;
+            padding: 1rem;
         }
 
-        .portal-button:hover {
-            box-shadow: 
-                0 0 10px var(--primary-color),
-                0 0 20px var(--primary-color),
-                0 0 30px var(--primary-color);
-        }
-
-        .portal-button:hover span {
-            color: var(--secondary-color);
-            text-shadow: 
-                0 0 5px var(--secondary-color),
-                0 0 10px var(--secondary-color);
-        }
-
-        .portal-button.clicked {
-            animation: button-pulse 0.5s ease-in-out;
-        }
-
-        @keyframes button-pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(0.95) rotate(2deg); }
-        }
-
-        .circuit-line {
+        .btn::before {
+            content: '';
+            z-index: -1;
+            background-color: var(--color);
+            border: 2px solid black;
+            border-radius: 2rem;
+            width: 110%;
+            height: 100%;
             position: absolute;
-            background: linear-gradient(
-                to right, 
-                transparent, 
-                rgba(0, 255, 255, 0.3), 
-                rgba(0, 255, 255, 0.6), 
-                rgba(0, 255, 255, 0.3), 
-                transparent
-            );
-            z-index: 2;
-            opacity: 0.4;
+            transform: rotate(10deg);
+            transition: 0.5s;
+            opacity: 0.2;
         }
+
+        .btn:hover {
+            cursor: pointer;
+            filter: brightness(1.2);
+            transform: scale(1.1);
+        }
+
+        .btn:hover::before {
+            transform: rotate(0deg);
+            opacity: 1;
+        }
+
+        .btn svg {
+            transform: translateX(-200%);
+            transition: 0.5s;
+            width: 0;
+            opacity: 0;
+        }
+
+        .btn:hover svg {
+            width: 25px;
+            transform: translateX(0%);
+            opacity: 1;
+        }
+
+        .btn:active {
+            filter: brightness(1.4);
+        }
+
     </style>
 </head>
 <body>
     <div class="cyberpunk-background">
         <div class="glitch-layer"></div>
         <div class="data-stream"></div>
-        <div id="circuitLines"></div>
     </div>
     <a href="/admin">
-    <button class="portal-button" id="adminPortalButton">
-        <span>Enter Admin Portal</span>
-    </button>
+        <button class="btn">
+            <div>ENTER ADMIN PORTAL</div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" viewBox="0 0 24 24" fill="none">
+                <path d="M11.6801 14.62L14.2401 12.06L11.6801 9.5" stroke="black" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M4 12.0601H14.17" stroke="black" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M12 4C16.42 4 20 7 20 12C20 17 16.42 20 12 20" stroke="black" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </button>
     </a>
-    <script>
-        function createCircuitLines() {
-            const circuitContainer = document.getElementById('circuitLines');
-            const linesCount = 30;
-
-            for (let i = 0; i < linesCount; i++) {
-                const line = document.createElement('div');
-                line.classList.add('circuit-line');
-
-                const top = Math.random() * 100;
-                const width = Math.random() * 200 + 50;
-                const height = Math.random() * 2 + 1;
-                const angle = Math.random() * 360;
-                const animationDuration = 3 + Math.random() * 2;
-
-                line.style.top = `${top}%`;
-                line.style.width = `${width}%`;
-                line.style.height = `${height}px`;
-                line.style.transform = `rotate(${angle}deg)`;
-                line.style.animation = `circuit-pulse ${animationDuration}s infinite alternate`;
-
-                circuitContainer.appendChild(line);
-            }
-        }
-
-        const adminPortalButton = document.getElementById('adminPortalButton');
-        adminPortalButton.addEventListener('click', function() {
-            this.classList.add('clicked');
-            setTimeout(() => {
-                this.classList.remove('clicked');
-            }, 500);
-        });
-
-        createCircuitLines();
-    </script>
 </body>
 </html>
