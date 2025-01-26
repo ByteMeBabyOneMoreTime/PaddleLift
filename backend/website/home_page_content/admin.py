@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django import forms
 
-from django.db import models
 from .models import ManagementTeam, MissionAndVision, about, stats, ClientsLogos, GlobalExpansion, service, ClientsResponse
 from website.settings import HOME_PAGE_CONTENT_FOLDER
 from cloud.utils import file_url
