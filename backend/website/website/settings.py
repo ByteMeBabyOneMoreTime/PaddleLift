@@ -233,8 +233,9 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 UNFOLD = {
-    "SITE_TITLE": "Custom suffix in <title> tag",
-    "SITE_HEADER": "Appears in sidebar at the top",
+    "SITE_HEADER": _("Formula Admin"),
+    "SITE_TITLE": _("Formula Admin"),
+    "SITE_SYMBOL": "settings",
     "SITE_URL": "/",
     # "SITE_ICON": lambda request: static("icon.svg"),  # both modes, optimise for 32px height
     "SITE_ICON": {
@@ -246,7 +247,9 @@ UNFOLD = {
         "light": lambda request: static("logo-light.svg"),  # light mode
         "dark": lambda request: static("logo-dark.svg"),  # dark mode
     },
-    "SITE_SYMBOL": "speed",  # symbol from icon set
+    "SCRIPTS": [
+        lambda request: static("loader.js"),
+    ],
     "SITE_FAVICONS": [
         {
             "rel": "icon",
@@ -258,7 +261,7 @@ UNFOLD = {
     "SHOW_HISTORY": True, # show/hide "History" button, default: True
     "SHOW_VIEW_ON_SITE": True, # show/hide "View on site" button, default: True
     
-    "BORDER_RADIUS": "6px",
+    "BORDER_RADIUS": "0px",
     "COLORS": {
         "base": {
             "50": "249 250 251",
@@ -295,6 +298,7 @@ UNFOLD = {
             "important-dark": "var(--color-base-100)",  # text-base-100
         },
     },
+    
     "EXTENSIONS": {
         "modeltranslation": {
             "flags": {
