@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 import dj_database_url
 
 from django.templatetags.static import static
-from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 # Load .env
@@ -317,6 +316,7 @@ GCP_CLIENT_EMAIL = os.getenv("GCP_CLIENT_EMAIL")
 GCP_PRIVATE_KEY_ID = os.getenv("GCP_PRIVATE_KEY_ID")
 GCP_CLIENT_ID = os.getenv("GCP_CLIENT_ID")
 GCP_CLIENT_X509_CERT_URL = os.getenv("GCP_CLIENT_X509_CERT_URL")
+SERPAPIKEY = os.getenv("SERPAPIKEY")
 
 CV_FOLDER=os.getenv('CV_FOLDER')
 HOME_PAGE_CONTENT_FOLDER = os.getenv('HOME_PAGE_CONTENT_FOLDER')

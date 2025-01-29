@@ -1,12 +1,15 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 from django import forms
 
-from .models import ContactInformation, FewSuccessStories, IndustriesWeServeCards, IndustriesWeServeDescription, ManagementTeam, MissionAndVision, OrganizationalStructureCards, OurPortfolioDescription, OurServicesDescription, PersonalImages, WhatSetsUsApartCards, about, stats, ClientsLogos, GlobalExpansion, service, ClientsResponse
+
+
+from .models import Reviews, ContactInformation, FewSuccessStories, IndustriesWeServeCards, IndustriesWeServeDescription, ManagementTeam, MissionAndVision, OrganizationalStructureCards, OurPortfolioDescription, OurServicesDescription, PersonalImages, WhatSetsUsApartCards, about, stats, ClientsLogos, GlobalExpansion, service, ClientsResponse
 from website.settings import HOME_PAGE_CONTENT_FOLDER
 from cloud.utils import file_url
 import imghdr
 from django.core.exceptions import ValidationError
-from unfold.admin import ModelAdmin
+
 from image_uploader_widget.widgets import ImageUploaderWidget
 
 def validate_image(value):
@@ -266,4 +269,8 @@ class about(ModelAdmin):
 
 @admin.register(ContactInformation)
 class about(ModelAdmin):
+    pass
+
+@admin.register(Reviews)
+class Review(ModelAdmin):
     pass

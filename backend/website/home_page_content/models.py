@@ -165,3 +165,15 @@ class ContactInformation(SingletonModel):
     WhatsApp = models.CharField(max_length=400)
     Email = models.EmailField(max_length=400)
     Address = models.TextField()
+
+class Reviews(models.Model):
+    class Meta:
+        verbose_name = "R - Review"
+
+    Username = models.CharField(max_length=400)
+    rating = models.CharField(max_length=20)
+    description = models.TextField()
+    date = models.CharField(max_length=200)
+
+    def __str__(self):
+        return f"Name: {self.Username}, Rating: {self.rating}"

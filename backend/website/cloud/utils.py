@@ -4,8 +4,6 @@ from django.core.files.storage import FileSystemStorage
 
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
-from django.contrib.staticfiles.storage import staticfiles_storage
-from website.settings import *
 import json
 import base64
 

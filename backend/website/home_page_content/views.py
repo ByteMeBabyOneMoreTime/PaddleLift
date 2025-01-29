@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from .models import ClientsLogos, ContactInformation, FewSuccessStories, GlobalExpansion, IndustriesWeServeCards, IndustriesWeServeDescription, ManagementTeam, MissionAndVision, OrganizationalStructureCards, OurPortfolioDescription, OurServicesDescription, PersonalImages, WhatSetsUsApartCards, about, service, stats
+from .models import ClientsLogos, ContactInformation, FewSuccessStories, GlobalExpansion, IndustriesWeServeCards, IndustriesWeServeDescription, ManagementTeam, MissionAndVision, OrganizationalStructureCards, OurPortfolioDescription, OurServicesDescription, PersonalImages, Reviews, WhatSetsUsApartCards, about, service, stats
 from django.views.decorators.http import require_http_methods
 
 def get_service_data(request: object) -> JsonResponse:
@@ -391,3 +391,25 @@ def contact_information_json_view(request):
     except Exception as e:
         data = {"error": str(e)}
     return JsonResponse(data)
+
+@require_http_methods(["GET"])
+def reviews_json_view(request):
+    try:
+        reviews = Reviews.objects.all().order_by('-date')  # Get all reviews, ordered by date descending
+        if reviews:
+            data = {
+                "reviews": [
+                    {
+                        "Username": review.Username,
+                        "rating": review.rating,
+                        "description": review.description,
+                        "date": review.date
+                    } 
+                    for review in reviews
+                ]
+            }
+        else:
+            data = {"error": "No reviews found."}
+    except Exception as e:
+        data = {"error": str(e)}
+    return JsonResponse(data, safe=False)  # safe=False allows non-dict objects to be serialize
