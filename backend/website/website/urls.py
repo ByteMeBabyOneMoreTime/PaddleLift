@@ -6,5 +6,6 @@ urlpatterns = [
     path('admin/', admin.site.urls, name="admin"),
     path('cron', include('cron.urls')),
     path('', home),
-    path('components/', include('home_page_content.urls'))
+    path('components/', include('home_page_content.urls')),
+    path('', include('jobs.urls')),
 ]

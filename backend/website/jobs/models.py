@@ -41,4 +41,4 @@ class job_listing(models.Model):
     Client_Name = models.CharField(max_length=2000, blank=True, null=True, default="None")
     Client_Industry = models.CharField(max_length=2000, blank=False, null=False)
     Job_Description = HTMLField()
-
+    Questions = models.TextField(help_text="Add all the Questions to be answered by the candidate", default="")

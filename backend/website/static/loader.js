@@ -72,5 +72,5 @@ document.addEventListener("DOMContentLoaded", function() {
     // Remove the spinner after the fade-out effect
     setTimeout(function() {
         spinnerContainer.style.display = "none"; // Hide the spinner container after fade
-    }, 1500);  // Wait for 1.5 seconds after fade for smooth removal
+    }, 1000);  // Wait for 1.5 seconds after fade for smooth removal
 });
