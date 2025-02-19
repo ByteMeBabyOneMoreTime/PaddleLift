@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import job_listing, skill
+from .models import job_listing
 from unfold.admin import ModelAdmin
 from tinymce.widgets import TinyMCE
 # Register your models here.
@@ -42,13 +42,10 @@ class JobListingAdmin(ModelAdmin, ImportExportModelAdmin):
     form = JobListingForm  # Use the custom form with TinyMCE editor
     import_form_class = ImportForm
     export_form_class = ExportForm
-    list_display = ('Title', 'short_description', 'Experience_level', 'Employment_type', 'Job_Location')
+    list_display = ('Title','Work_Mode', 'Experience_level', 'Employment_type', 'Job_Location')
 
     def short_description(self, obj):
         return obj.Job_Description[:100] + '...' if obj.Job_Description else 'No Description'
 
     short_description.short_description = 'Job Description'
 
-@admin.register(skill)
-class skill(ModelAdmin):
-    pass
