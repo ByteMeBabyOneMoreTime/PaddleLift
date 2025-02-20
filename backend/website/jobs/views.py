@@ -2,6 +2,12 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from .models import job_listing  # Import your job_listing model
 
+def safe_split(value):
+    """Safely split a comma-separated string into a list, handling None and empty values properly."""
+    return [x.strip() for x in value.strip().split(',') if x.strip()] if value else []
+
+
+
 @require_http_methods(["GET"])
 def job_listings_json_view(request):
     try:
@@ -10,23 +16,29 @@ def job_listings_json_view(request):
             data = {
                 "job_listings": [
                     {
-                        "Title": job.Title,
-                        "Required_skills": [x.strip() for x  in(job.Required_skills.strip()).split(',')],
-                        "Experience_level": job.Experience_level,
-                        "Employment_type": job.Employment_type,
-                        "Work_Mode": job.Work_Mode,
-                        "Job_Location": job.Job_Location,
-                        "Years_of_Experience_Required": [job.Min_Years_of_Experience_Required,job.Max_Years_of_Experience_Required],
-                        "Salary_Range": [job.Min_Salary, job.Max_Salary],
-                        "Educational_Qualifications": [x.strip() for x  in(job.Educational_Qualifications.strip()).split(',')],
-                        "Certifications": [x.strip() for x  in (job.Certifications.strip()).split(',')],
-                        "Other_Benefits": job.Other_Benefits,
-                        "Number_of_Openings": job.Number_of_Openings,
-                        "Client_Name": job.Client_Name,
-                        "Client_Industry": job.Client_Industry,
-                        "Job_Description": str(job.Job_Description),  # Convert HTMLField to string
-                        "Questions": [x.strip() for x  in (str(job.Questions).strip()).split(',')]  # Convert HTMLField to string
-                    } 
+                        "Title": job.Title or "",  # Ensure non-null string
+                        "Required_skills": safe_split(job.Required_skills),
+                        "Experience_level": job.Experience_level or "",
+                        "Employment_type": job.Employment_type or "",
+                        "Work_Mode": job.Work_Mode or "",
+                        "Job_Location": job.Job_Location or "",
+                        "Years_of_Experience_Required": [
+                            job.Min_Years_of_Experience_Required if job.Min_Years_of_Experience_Required is not None else 0, 
+                            job.Max_Years_of_Experience_Required if job.Max_Years_of_Experience_Required is not None else 0
+                        ],
+                        "Salary_Range": [
+                            job.Min_Salary if job.Min_Salary is not None else 0, 
+                            job.Max_Salary if job.Max_Salary is not None else 0
+                        ],
+                        "Educational_Qualifications": safe_split(job.Educational_Qualifications),
+                        "Certifications": safe_split(job.Certifications),
+                        "Other_Benefits": job.Other_Benefits or "",
+                        "Number_of_Openings": job.Number_of_Openings if job.Number_of_Openings is not None else 0,
+                        "Client_Name": job.Client_Name or "",
+                        "Client_Industry": job.Client_Industry or "",
+                        "Job_Description": str(job.Job_Description) if job.Job_Description else "",
+                        "Questions": safe_split(job.Questions)
+                    }
                     for job in jobs
                 ]
             }
