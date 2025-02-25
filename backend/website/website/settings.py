@@ -197,6 +197,7 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 UNFOLD = {
+    "DASHBOARD_CALLBACK": "home_page_content.utils.dashboard_callback",
     "SITE_HEADER": _("PaddleLift Admin"),
     "SITE_TITLE": _("PaddleLift Admin"),
     "SITE_SYMBOL": "settings",

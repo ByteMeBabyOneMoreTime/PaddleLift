@@ -27,14 +27,48 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
 class GroupAdmin(BaseGroupAdmin, ModelAdmin):
     pass
 
+from django import forms
+
+class QuestionListWidget(forms.Textarea):
+    class Media:
+        css = {
+            'all': ('/static/css/custom_admin.css',)
+        }
+
+    def __init__(self, attrs=None):
+        default_attrs = {
+            "class": "question-widget",
+            "placeholder": "Enter each question on a new line...",
+        }
+        if attrs:
+            default_attrs.update(attrs)
+        super().__init__(default_attrs)
+
+    
+    def render(self, name, value, attrs=None, renderer=None):
+        if value:
+            value = "\n".join(value.split(" || "))  # Convert "||" to new lines
+        return super().render(name, value, attrs, renderer)
 
 
 class JobListingForm(forms.ModelForm):
     # Use TinyMCE widget for the Job_Description field
+    Questions = forms.CharField(
+        widget=QuestionListWidget(attrs={'rows': 5, 'placeholder': 'Enter each question on a new line...'}),
+        required=False,
+        help_text="Create Questions in new lines"
+    )
+
+    def clean_Questions(self):
+        data = self.cleaned_data['Questions']
+        return " || ".join(line.strip() for line in data.split("\n") if line.strip())  # Convert lines back to "||"
+    
+    
     class Meta:
         model = job_listing
         fields = '__all__'
 
+    
     Job_Description = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
 
 @admin.register(job_listing)
@@ -46,6 +80,18 @@ class JobListingAdmin(ModelAdmin, ImportExportModelAdmin):
 
     def short_description(self, obj):
         return obj.Job_Description[:100] + '...' if obj.Job_Description else 'No Description'
+    
+    def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
+        extra_context = extra_context or {}
 
+        extra_context['show_save_and_continue'] = False # Here
+
+        return super().changeform_view(request, object_id, form_url, extra_context)
+
+    class Media:
+        css = {
+            "all": ("/static/css/q.css",)
+        }
+    
     short_description.short_description = 'Job Description'
 

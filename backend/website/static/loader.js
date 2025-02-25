@@ -67,10 +67,10 @@ document.addEventListener("DOMContentLoaded", function() {
     // Hide the spinner and fade out the background after 2 seconds
     setTimeout(function() {
         spinnerContainer.style.opacity = "0"; // Fade out the background
-    }, 1000);  // 1000 milliseconds = 1 second
+    }, 500); // 1000 milliseconds = 1 second
 
     // Remove the spinner after the fade-out effect
     setTimeout(function() {
         spinnerContainer.style.display = "none"; // Hide the spinner container after fade
-    }, 1000);  // Wait for 1.5 seconds after fade for smooth removal
+    }, 500); // Wait for 1.5 seconds after fade for smooth removal
 });

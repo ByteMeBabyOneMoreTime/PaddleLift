@@ -6,7 +6,9 @@ def safe_split(value):
     """Safely split a comma-separated string into a list, handling None and empty values properly."""
     return [x.strip() for x in value.strip().split(',') if x.strip()] if value else []
 
-
+def safe_split2(value):
+    """Safely split a comma-separated string into a list, handling None and empty values properly."""
+    return [x.strip() for x in value.strip().split('||') if x.strip()] if value else []
 
 @require_http_methods(["GET"])
 def job_listings_json_view(request):
@@ -37,7 +39,7 @@ def job_listings_json_view(request):
                         "Client_Name": job.Client_Name or "",
                         "Client_Industry": job.Client_Industry or "",
                         "Job_Description": str(job.Job_Description) if job.Job_Description else "",
-                        "Questions": safe_split(job.Questions)
+                        "Questions": safe_split2(job.Questions)
                     }
                     for job in jobs
                 ]

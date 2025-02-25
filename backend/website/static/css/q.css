@@ -1,0 +1,27 @@
+/* Custom styling for Unfold Dark admin */
+
+.question-widget {
+    width: 100%;
+    min-height: 150px;
+    background-color: #1e1e2d;
+    /* Match Unfold Dark's background */
+    color: #ffffff;
+    /* White text for contrast */
+    border: 1px solid #2a2a3c;
+    /* Subtle border */
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.question-widget::placeholder {
+    color: #888ea4;
+    /* Subtle placeholder color */
+}
+
+.question-widget:focus {
+    border-color: #4a4a6a;
+    /* Slightly brighter border on focus */
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+}
