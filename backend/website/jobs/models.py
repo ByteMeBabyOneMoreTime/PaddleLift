@@ -30,6 +30,7 @@ class job_listing(models.Model):
     Job_Location = models.CharField(verbose_name="Job Location",max_length=2000, blank=False, null=False)
     Min_Years_of_Experience_Required = models.PositiveIntegerField(verbose_name="Min Years of Experience", help_text="only positive integers allowed")
     Max_Years_of_Experience_Required = models.PositiveIntegerField(verbose_name="Max Years of Experience", help_text="only positive integers allowed")
+    Salary_currency = models.CharField(verbose_name = "Currency", max_length = 400, default="₹")
     Min_Salary= models.PositiveIntegerField(verbose_name="Min Salary", help_text="only positive integers allowed")
     Max_Salary= models.PositiveIntegerField(verbose_name="Max Salary", help_text="only positive integers allowed")
     Educational_Qualifications = models.CharField(verbose_name="Education Qualifications", help_text="differentiate with a comma. example object1, object2", max_length=2000, blank=True, null=True, default="")
