@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import job_listing
+from .models import job_listing, currency
 from unfold.admin import ModelAdmin
 from tinymce.widgets import TinyMCE
+from django.contrib import messages
 # Register your models here.
 from django import forms
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
@@ -14,6 +15,10 @@ from unfold.contrib.import_export.forms import ExportForm, ImportForm
 admin.site.unregister(User)
 admin.site.unregister(Group)
 
+
+@admin.register(currency)
+class currency(ModelAdmin):
+    pass
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin, ModelAdmin):
@@ -78,6 +83,7 @@ class JobListingAdmin(ModelAdmin, ImportExportModelAdmin):
     export_form_class = ExportForm
     list_display = ('Title','Work_Mode', 'Experience_level', 'Employment_type', 'Job_Location')
 
+    change_form_template = 'admin/jobs/job_listing/change_form.html'
     def short_description(self, obj):
         return obj.Job_Description[:100] + '...' if obj.Job_Description else 'No Description'
     

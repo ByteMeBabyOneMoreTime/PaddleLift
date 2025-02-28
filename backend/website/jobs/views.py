@@ -28,7 +28,7 @@ def job_listings_json_view(request):
                             job.Min_Years_of_Experience_Required if job.Min_Years_of_Experience_Required is not None else 0, 
                             job.Max_Years_of_Experience_Required if job.Max_Years_of_Experience_Required is not None else 0
                         ],
-                        "Currency" : job.Salary_currency,
+                        "Currency" : job.Currency,
                         "Salary_Range": [
                             job.Min_Salary if job.Min_Salary is not None else 0, 
                             job.Max_Salary if job.Max_Salary is not None else 0

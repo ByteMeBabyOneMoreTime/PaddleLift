@@ -1,6 +1,11 @@
 from django.db import models
 from tinymce.models import HTMLField
 
+class currency(models.Model):
+    sign = models.CharField(verbose_name="Currency", max_length=400)
+    
+    def __str__(self):
+        return self.sign
 
 class job_listing(models.Model):
     Title = models.CharField(verbose_name="Title",max_length=500, null=False, blank=False)
@@ -30,13 +35,13 @@ class job_listing(models.Model):
     Job_Location = models.CharField(verbose_name="Job Location",max_length=2000, blank=False, null=False)
     Min_Years_of_Experience_Required = models.PositiveIntegerField(verbose_name="Min Years of Experience", help_text="only positive integers allowed")
     Max_Years_of_Experience_Required = models.PositiveIntegerField(verbose_name="Max Years of Experience", help_text="only positive integers allowed")
-    Salary_currency = models.CharField(verbose_name = "Currency", max_length = 400, default="₹")
+    Currency = models.ForeignKey(currency, on_delete=models.PROTECT)
     Min_Salary= models.PositiveIntegerField(verbose_name="Min Salary", help_text="only positive integers allowed")
     Max_Salary= models.PositiveIntegerField(verbose_name="Max Salary", help_text="only positive integers allowed")
     Educational_Qualifications = models.CharField(verbose_name="Education Qualifications", help_text="differentiate with a comma. example object1, object2", max_length=2000, blank=True, null=True, default="")
     Certifications = models.TextField(verbose_name="Certifications", help_text="differentiate with a comma. example object1, object2", blank=True, null=True, default="")
     Other_Benefits = models.CharField(verbose_name="Other Benefits",max_length=2000, blank=True, null=True, default="")
-    Number_of_Openings = models.PositiveIntegerField(verbose_name="Number of Openings",blank=True, default=0, help_text="only positive integers allowed")
+    Number_of_Openings = models.PositiveIntegerField(verbose_name="Number of Openings", default=0, help_text="only positive integers allowed")
     Client_Name = models.CharField(verbose_name="Client Name",max_length=2000, blank=True, null=True, default="")
     Client_Industry = models.CharField(verbose_name="Client Industry",max_length=2000, blank=False, null=False)
     Job_Description = HTMLField(verbose_name="Job Description")
