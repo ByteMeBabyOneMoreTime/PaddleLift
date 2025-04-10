@@ -1,6 +1,27 @@
 from django.http import JsonResponse
-from .models import ClientsLogos, ContactInformation, FewSuccessStories, GlobalExpansion, IndustriesWeServeCards, IndustriesWeServeDescription, ManagementTeam, MissionAndVision, OrganizationalStructureCards, OurPortfolioDescription, OurServicesDescription, PersonalImages, Reviews, WhatSetsUsApartCards, about, service, stats
 from django.views.decorators.http import require_http_methods
+
+from .models import (
+    ClientsLogos,
+    ClientsResponse,
+    ContactInformation,
+    FewSuccessStories,
+    GlobalExpansion,
+    IndustriesWeServeCards,
+    IndustriesWeServeDescription,
+    ManagementTeam,
+    MissionAndVision,
+    OrganizationalStructureCards,
+    OurPortfolioDescription,
+    OurServicesDescription,
+    PersonalImages,
+    Reviews,
+    WhatSetsUsApartCards,
+    about,
+    service,
+    stats,
+)
+
 
 def get_service_data(request: object) -> JsonResponse:
     """
@@ -12,22 +33,22 @@ def get_service_data(request: object) -> JsonResponse:
             service_instance = service.objects.get()
             data = {
                 "service1": {
-                    "id" : "1",
+                    "id": "1",
                     "heading": service_instance.service1_heading,
                     "vedio_url": service_instance.service1_video_url,
                 },
                 "service2": {
-                    "id" : "2",
+                    "id": "2",
                     "heading": service_instance.service2_heading,
                     "vedio_url": service_instance.service2_video_url,
                 },
                 "service3": {
-                    "id" : "3",
+                    "id": "3",
                     "heading": service_instance.service3_heading,
                     "vedio_url": service_instance.service3_video_url,
                 },
                 "service4": {
-                    "id" : "4",
+                    "id": "4",
                     "heading": service_instance.service4_heading,
                     "vedio_url": service_instance.service4_video_url,
                 },
@@ -37,7 +58,7 @@ def get_service_data(request: object) -> JsonResponse:
             return JsonResponse({"error": "Service data not found"}, status=404)
     else:
         return JsonResponse({"error": "This method is not allowed"}, status=405)
-    
+
 
 @require_http_methods(["GET"])
 def global_expansion_view(request):
@@ -47,11 +68,10 @@ def global_expansion_view(request):
     try:
         # Get the first instance of GlobalExpansion (Singleton pattern)
         global_expansion = GlobalExpansion.objects.first()
-        
+
         if not global_expansion:
             return JsonResponse(
-                {"error": "Global Expansion data not found."},
-                status=404
+                {"error": "Global Expansion data not found."}, status=404
             )
 
         # Return the data as JSON
@@ -63,10 +83,13 @@ def global_expansion_view(request):
     except Exception as e:
         # Handle unexpected errors
         return JsonResponse(
-            {"error": "An error occurred while retrieving the data.", "details": str(e)},
-            status=500
+            {
+                "error": "An error occurred while retrieving the data.",
+                "details": str(e),
+            },
+            status=500,
         )
-    
+
 
 @require_http_methods(["GET"])
 def stats_view(request):
@@ -76,18 +99,16 @@ def stats_view(request):
     try:
         # Get the first instance of stats (Singleton pattern)
         stats_instance = stats.objects.first()
-        
+
         if not stats_instance:
-            return JsonResponse(
-                {"error": "Stats data not found."},
-                status=404
-            )
+            return JsonResponse({"error": "Stats data not found."}, status=404)
 
         # Return the stats data as JSON
         data = {
             "id": stats_instance.id,
             "description": stats_instance.description,
-            "data":   [{
+            "data": [
+                {
                     "title": "Clients Served",
                     "value": stats_instance.ClientsServed,
                     "suffix": "+",
@@ -120,7 +141,7 @@ def stats_view(request):
                     "prefix": ">",
                     "value": stats_instance.CandidateSatisfactionRate,
                     "suffix": "%",
-                }
+                },
             ],
         }
         return JsonResponse(data, status=200)
@@ -128,10 +149,13 @@ def stats_view(request):
     except Exception as e:
         # Handle unexpected errors
         return JsonResponse(
-            {"error": "An error occurred while retrieving the stats.", "details": str(e)},
-            status=500
+            {
+                "error": "An error occurred while retrieving the stats.",
+                "details": str(e),
+            },
+            status=500,
         )
-    
+
 
 @require_http_methods(["GET"])
 def clients_logos_view(request):
@@ -143,17 +167,14 @@ def clients_logos_view(request):
         clients_logos = ClientsLogos.objects.all()
 
         if not clients_logos.exists():
-            return JsonResponse(
-                {"error": "No client logos found."},
-                status=404
-            )
+            return JsonResponse({"error": "No client logos found."}, status=404)
 
         # Serialize the data into a list of dictionaries
         data = [
-            {   "id" : client_logo.id,
+            {
+                "id": client_logo.id,
                 "src": client_logo.logo_url,
                 "name": client_logo.name,
-                
             }
             for client_logo in clients_logos
         ]
@@ -163,8 +184,11 @@ def clients_logos_view(request):
     except Exception as e:
         # Handle unexpected errors
         return JsonResponse(
-            {"error": "An error occurred while retrieving the data.", "details": str(e)},
-            status=500
+            {
+                "error": "An error occurred while retrieving the data.",
+                "details": str(e),
+            },
+            status=500,
         )
 
 
@@ -177,20 +201,18 @@ def about_json_view(request):
                 "description": about_instance.description,
             }
         else:
-            data = {
-                "error": "No 'About PaddleLift' instance found."
-            }
+            data = {"error": "No 'About PaddleLift' instance found."}
     except Exception as e:
-        data = {
-            "error": str(e)
-        }
+        data = {"error": str(e)}
     return JsonResponse(data)
 
 
 @require_http_methods(["GET"])
 def mission_and_vision_json_view(request):
     try:
-        mission_and_vision_instance = MissionAndVision.objects.first()  # Fetching the singleton instance
+        mission_and_vision_instance = (
+            MissionAndVision.objects.first()
+        )  # Fetching the singleton instance
         if mission_and_vision_instance:
             data = {
                 "vision": {
@@ -200,16 +222,12 @@ def mission_and_vision_json_view(request):
                 "mission": {
                     "image_url": mission_and_vision_instance.mission_image_url,
                     "description": mission_and_vision_instance.mission_description,
-                }
+                },
             }
         else:
-            data = {
-                "error": "No 'Mission and Vision' instance found."
-            }
+            data = {"error": "No 'Mission and Vision' instance found."}
     except Exception as e:
-        data = {
-            "error": str(e)
-        }
+        data = {"error": str(e)}
     return JsonResponse(data)
 
 
@@ -226,23 +244,19 @@ def management_team_json_view(request):
                         "position": member.role,
                         "photo": member.image_url,
                         "description": member.about_text,
-                        "socials" : {
-                        "linkedin": member.linked_in_url,
+                        "socials": {
+                            "linkedin": member.linked_in_url,
                         },
-                        
                     }
                     for member in management_team_members
                 ]
             }
         else:
-            data = {
-                "error": "No management team members found."
-            }
+            data = {"error": "No management team members found."}
     except Exception as e:
-        data = {
-            "error": str(e)
-        }
+        data = {"error": str(e)}
     return JsonResponse(data)
+
 
 @require_http_methods(["GET"])
 def personal_images_json_view(request):
@@ -257,6 +271,7 @@ def personal_images_json_view(request):
     except Exception as e:
         data = {"error": str(e)}
     return JsonResponse(data)
+
 
 @require_http_methods(["GET"])
 def our_services_description_json_view(request):
@@ -274,6 +289,7 @@ def our_services_description_json_view(request):
         data = {"error": str(e)}
     return JsonResponse(data)
 
+
 @require_http_methods(["GET"])
 def industries_we_serve_description_json_view(request):
     try:
@@ -285,6 +301,7 @@ def industries_we_serve_description_json_view(request):
     except Exception as e:
         data = {"error": str(e)}
     return JsonResponse(data)
+
 
 @require_http_methods(["GET"])
 def industries_we_serve_cards_json_view(request):
@@ -302,6 +319,7 @@ def industries_we_serve_cards_json_view(request):
         data = {"error": str(e)}
     return JsonResponse(data)
 
+
 @require_http_methods(["GET"])
 def what_sets_us_apart_cards_json_view(request):
     try:
@@ -309,10 +327,22 @@ def what_sets_us_apart_cards_json_view(request):
         if cards:
             data = {
                 "what_sets_us_apart_cards": {
-                    "card1": {"heading": cards.card1_heading, "description": cards.card1_description},
-                    "card2": {"heading": cards.card2_heading, "description": cards.card2_description},
-                    "card3": {"heading": cards.card3_heading, "description": cards.card3_description},
-                    "card4": {"heading": cards.card4_heading, "description": cards.card4_description},
+                    "card1": {
+                        "heading": cards.card1_heading,
+                        "description": cards.card1_description,
+                    },
+                    "card2": {
+                        "heading": cards.card2_heading,
+                        "description": cards.card2_description,
+                    },
+                    "card3": {
+                        "heading": cards.card3_heading,
+                        "description": cards.card3_description,
+                    },
+                    "card4": {
+                        "heading": cards.card4_heading,
+                        "description": cards.card4_description,
+                    },
                 }
             }
         else:
@@ -321,6 +351,7 @@ def what_sets_us_apart_cards_json_view(request):
         data = {"error": str(e)}
     return JsonResponse(data)
 
+
 @require_http_methods(["GET"])
 def organizational_structure_cards_json_view(request):
     try:
@@ -328,10 +359,22 @@ def organizational_structure_cards_json_view(request):
         if cards:
             data = {
                 "organizational_structure_cards": {
-                    "card1": {"heading": cards.card1_heading, "description": cards.card1_description},
-                    "card2": {"heading": cards.card2_heading, "description": cards.card2_description},
-                    "card3": {"heading": cards.card3_heading, "description": cards.card3_description},
-                    "card4": {"heading": cards.card4_heading, "description": cards.card4_description},
+                    "card1": {
+                        "heading": cards.card1_heading,
+                        "description": cards.card1_description,
+                    },
+                    "card2": {
+                        "heading": cards.card2_heading,
+                        "description": cards.card2_description,
+                    },
+                    "card3": {
+                        "heading": cards.card3_heading,
+                        "description": cards.card3_description,
+                    },
+                    "card4": {
+                        "heading": cards.card4_heading,
+                        "description": cards.card4_description,
+                    },
                 }
             }
         else:
@@ -339,6 +382,7 @@ def organizational_structure_cards_json_view(request):
     except Exception as e:
         data = {"error": str(e)}
     return JsonResponse(data)
+
 
 @require_http_methods(["GET"])
 def our_portfolio_description_json_view(request):
@@ -351,6 +395,7 @@ def our_portfolio_description_json_view(request):
     except Exception as e:
         data = {"error": str(e)}
     return JsonResponse(data)
+
 
 @require_http_methods(["GET"])
 def few_success_stories_json_view(request):
@@ -373,6 +418,7 @@ def few_success_stories_json_view(request):
         data = {"error": str(e)}
     return JsonResponse(data)
 
+
 @require_http_methods(["GET"])
 def contact_information_json_view(request):
     try:
@@ -392,10 +438,13 @@ def contact_information_json_view(request):
         data = {"error": str(e)}
     return JsonResponse(data)
 
+
 @require_http_methods(["GET"])
 def reviews_json_view(request):
     try:
-        reviews = Reviews.objects.all().order_by('-date')  # Get all reviews, ordered by date descending
+        reviews = Reviews.objects.all().order_by(
+            "-date"
+        )  # Get all reviews, ordered by date descending
         if reviews:
             data = {
                 "reviews": [
@@ -403,8 +452,8 @@ def reviews_json_view(request):
                         "Username": review.Username,
                         "rating": review.rating,
                         "description": review.description,
-                        "date": review.date
-                    } 
+                        "date": review.date,
+                    }
                     for review in reviews
                 ]
             }
@@ -412,4 +461,32 @@ def reviews_json_view(request):
             data = {"error": "No reviews found."}
     except Exception as e:
         data = {"error": str(e)}
-    return JsonResponse(data, safe=False)  # safe=False allows non-dict objects to be serialize
+    return JsonResponse(
+        data, safe=False
+    )  # safe=False allows non-dict objects to be serialize
+
+
+@require_http_methods(["GET"])
+def what_our_clients_say_json_view(request):
+    try:
+        clients_responses = ClientsResponse.objects.all()
+        if clients_responses.exists():
+            data = {
+                "what_our_clients_say": [
+                    {
+                        "image_url": client_response.image_url,
+                        "name": client_response.name,
+                        "position": client_response.position,
+                        "response": client_response.response,
+                    }
+                    for client_response in clients_responses
+                ]
+            }
+        else:
+            data = {"error": "No clients responses found."}
+    except Exception as e:
+        data = {"error": str(e)}
+    return JsonResponse(
+        data, safe=False
+    )  # safe=False allows non-dict objects to be serialize
+
