@@ -10,12 +10,15 @@ def Run_review_fetch():
         Reviews.objects.all().delete()
         reviews_data = get_reviews()
         for review_data in reviews_data:
-            Reviews.objects.create(
-                Username=review_data['username'],
-                rating=str(review_data['rating']),  # Convert to string
-                description=review_data.get('description', ''),  # Handle missing descriptions
-                date=review_data['date']
-            )
+            if int(review_data['rating']) < 4:
+                pass
+            else:
+                Reviews.objects.create(
+                    Username=review_data['username'],
+                    rating=str(review_data['rating']),  # Convert to string
+                    description=review_data.get('description', ''),  # Handle missing descriptions
+                    date=review_data['date']
+                )
         Review_scheduling.objects.create(created_at=timezone.now())
     
 
