@@ -56,6 +56,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'cloud.middleware.S',
     "corsheaders.middleware.CorsMiddleware",
     # corsheaders middleware
     'django.middleware.security.SecurityMiddleware',

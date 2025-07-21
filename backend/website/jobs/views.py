@@ -40,7 +40,8 @@ def job_listings_json_view(request):
                         "Client_Name": job.Client_Name or "",
                         "Client_Industry": job.Client_Industry or "",
                         "Job_Description": str(job.Job_Description) if job.Job_Description else "",
-                        "Questions": safe_split2(job.Questions)
+                        "Questions": safe_split2(job.Questions),
+                        "email" : [x.strip() for x in job.Recruiter_email.split(',')]
                     }
                     for job in jobs
                 ]

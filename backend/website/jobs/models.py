@@ -9,6 +9,7 @@ class currency(models.Model):
 
 class job_listing(models.Model):
     Title = models.CharField(verbose_name="Title",max_length=500, null=False, blank=False)
+    Recruiter_email = models.EmailField(max_length=2000)
     Required_skills = models.TextField(verbose_name="Required Skills", help_text="differentiate with a comma. example object1, object2",blank=False)
     Experience_Level_Choices = (
         ('Entry-level', 'Entry-level'),
